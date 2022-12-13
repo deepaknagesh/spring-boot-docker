@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                         withMaven(maven: 'Default',jdk: 'Java 11') {
-                             sh "echo JAVA_HOME=$JAVA_HOME"
-                             sh "mvn clean"
-                         }
-                     }
+                 withMaven(maven: 'Default',jdk: 'Java 11') {
+                     sh "echo JAVA_HOME=$JAVA_HOME"
+                     sh 'mvn -B -DskipTests clean package'
                  }
+             }
+         }
 
 //         stage('Initialize'){
 //             steps{
@@ -31,10 +31,10 @@ pipeline {
      }
     post {
        always {
-          junit(
-            allowEmptyResults: true,
-            testResults: '*/test-reports/.xml'
-          )
+//           junit(
+//             allowEmptyResults: true,
+//             testResults: '*/test-reports/.xml'
+//           )
       }
    }
 }
