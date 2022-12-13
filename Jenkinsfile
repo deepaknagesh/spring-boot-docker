@@ -2,12 +2,12 @@ pipeline {
     agent any
 //     tools {
 // //         maven "Maven"
-// //         jdk "JDK"
+//         jdk "Java 11"
 //     }
     stages {
         stage('Clean') {
             steps {
-                         withMaven(maven: 'Default',jdk: 'Java 10') {
+                         withMaven(maven: 'Default',jdk: 'Java 11') {
                              sh "echo JAVA_HOME=$JAVA_HOME"
                              sh "mvn clean"
                          }
