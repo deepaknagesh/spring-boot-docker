@@ -30,11 +30,11 @@ pipeline {
 //         }
      }
     post {
-       always {
+//        always {
 //           junit(
 //             allowEmptyResults: true,
 //             testResults: '*/test-reports/.xml'
 //           )
-      }
+//       }
    }
 }
