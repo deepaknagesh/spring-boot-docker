@@ -7,8 +7,9 @@ pipeline {
     stages {
         stage('Initialize'){
             steps{
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
+//                 echo "PATH = ${M2_HOME}/bin:${PATH}"
                 echo "M2_HOME = /opt/maven"
+                sh 'apt-get install openjdk-11-jdk'
             }
         }
         stage('Build') {
