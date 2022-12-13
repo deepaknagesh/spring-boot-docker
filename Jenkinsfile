@@ -1,9 +1,14 @@
 pipeline {
     agent any
-    tools {
-        maven "Maven"
-        jdk "Java 11"
-    }
+//     tools {
+//         maven "Maven"
+//         jdk "Java 11"
+//     }
+
+//     docker {
+//         image 'maven:3.8.1-adoptopenjdk-11'
+//         args '-v $HOME/.m2:/root/.m2'
+//     }
     stages {
 //         stage('Clean') {
 //             steps {
@@ -14,14 +19,17 @@ pipeline {
 //              }
 //          }
 
-        stage('Initialize'){
-            steps{
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
-                echo "M2_HOME = /opt/maven"
-//                 sh 'sudo apt-get install openjdk-11-jdk'
-            }
-        }
+//         stage('Initialize'){
+//             steps{
+//                 echo "PATH = ${M2_HOME}/bin:${PATH}"
+//                 echo "M2_HOME = /opt/maven"
+// //                 sh 'sudo apt-get install openjdk-11-jdk'
+//             }
+//         }
         stage('Build executable jar') {
+            agent {
+                docker { image 'maven:3.8.6-eclipse-temurin-11' }
+            }
             steps {
                 dir("/var/jenkins_home/workspace/test") {
                     sh 'mvn -B -DskipTests clean package'
@@ -30,9 +38,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                dir("/var/jenkins_home/workspace/test") {
-                    sh 'docker build -t spring-boot-docker .'
-                }
+                sh 'docker build -t spring-boot-docker .'
             }
         }
      }
