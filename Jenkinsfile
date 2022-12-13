@@ -21,10 +21,17 @@ pipeline {
 //                 sh 'sudo apt-get install openjdk-11-jdk'
             }
         }
-        stage('Build') {
+        stage('Build executable jar') {
             steps {
                 dir("/var/jenkins_home/workspace/test") {
-                sh 'mvn -B -DskipTests clean package'
+                    sh 'mvn -B -DskipTests clean package'
+                }
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                dir("/var/jenkins_home/workspace/test") {
+                    sh 'docker build -t spring-boot-docker .'
                 }
             }
         }
